@@ -16,13 +16,13 @@ jobs:
         run: |
           docker --version
 
-      # تشغيل V2Ray في Docker Container
+      # تشغيل V2Ray في Docker Container باستخدام صورة محدثة
       - name: Run V2Ray container
         run: |
           docker run -d --name v2ray \
           -p 1080:1080 \
           -p 443:443 \
-          v2fly/v2ray-core
+          teddysun/v2ray
 
       # تحديث DuckDNS بالدومين الخاص بك
       - name: Update DuckDNS
