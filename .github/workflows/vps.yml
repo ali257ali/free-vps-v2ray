@@ -17,10 +17,10 @@ jobs:
           sudo apt-get update
           sudo apt-get install -y wget curl git unzip
 
-      # تثبيت V2Ray
+      # تثبيت V2Ray بصلاحيات root
       - name: Install V2Ray
         run: |
-          bash <(curl -L https://raw.githubusercontent.com/v2fly/fhs-install-v2ray/master/install-release.sh)
+          sudo bash <(curl -L https://raw.githubusercontent.com/v2fly/fhs-install-v2ray/master/install-release.sh)
 
       # تحديث DuckDNS بالدومين الخاص بك
       - name: Update DuckDNS
