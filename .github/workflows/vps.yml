@@ -1,4 +1,4 @@
-name: Free VPS Ubuntu + V2Ray
+name: Free VPS Docker + V2Ray
 
 on:
   workflow_dispatch:
@@ -11,24 +11,28 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v3
 
-      # تحديث النظام وتثبيت الأدوات الضرورية
-      - name: Update & install packages
+      # تحديث النظام وتثبيت Docker
+      - name: Update & install Docker
         run: |
           sudo apt-get update
-          sudo apt-get install -y wget curl git unzip
+          sudo apt-get install -y docker.io
 
-      # تثبيت V2Ray بصلاحيات root
-      - name: Install V2Ray
+      # تشغيل V2Ray في Docker Container
+      - name: Run V2Ray container
         run: |
-          sudo bash <(curl -L https://raw.githubusercontent.com/v2fly/fhs-install-v2ray/master/install-release.sh)
+          sudo docker run -d --name v2ray \
+          -p 1080:1080 \
+          -p 443:443 \
+          v2fly/v2ray-core
 
       # تحديث DuckDNS بالدومين الخاص بك
       - name: Update DuckDNS
         run: |
           curl -k "https://www.duckdns.org/update?domains=myvps01v2ry&ip="
 
-      # عرض معلومات VPS
+      # عرض حالة الحاوية والمعلومات
       - name: Show VPS info
         run: |
-          echo "VPS Setup Done"
+          echo "V2Ray Docker container is running"
+          sudo docker ps
           hostname -I
