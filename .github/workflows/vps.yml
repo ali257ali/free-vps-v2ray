@@ -11,16 +11,15 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v3
 
-      # تحديث النظام وتثبيت Docker
-      - name: Update & install Docker
+      # التحقق من وجود Docker
+      - name: Check Docker version
         run: |
-          sudo apt-get update
-          sudo apt-get install -y docker.io
+          docker --version
 
       # تشغيل V2Ray في Docker Container
       - name: Run V2Ray container
         run: |
-          sudo docker run -d --name v2ray \
+          docker run -d --name v2ray \
           -p 1080:1080 \
           -p 443:443 \
           v2fly/v2ray-core
@@ -34,5 +33,5 @@ jobs:
       - name: Show VPS info
         run: |
           echo "V2Ray Docker container is running"
-          sudo docker ps
+          docker ps
           hostname -I
